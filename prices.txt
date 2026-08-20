@@ -1,0 +1,3 @@
+# Synced from upload-settings.txt (album= / track=) â€” Bandcamp reads this file
+album=9.99
+track=0.99

@@ -1,0 +1,58 @@
+﻿DK-BC Uploader — how to use (short)
+===================================
+
+Latest always (GitHub):
+  https://github.com/ezixen/DK-BC-Uploader
+  https://github.com/ezixen/DK-BC-Uploader/releases/latest
+  ZIP:  https://github.com/ezixen/DK-BC-Uploader/releases/latest/download/DK-BC-uploader.zip
+  EXE:  https://github.com/ezixen/DK-BC-Uploader/releases/latest/download/DK-BC-Uploader-exe.zip
+  (Unpack → DK-BC-uploader\ folder is created for you.)
+
+What it does
+------------
+One album folder → DistroKid FORM + Bandcamp DRAFT at the SAME TIME
+(two Chrome tabs). DistroKid starts first (faster to check).
+Bandcamp takes longer (wav uploads). You publish yourself on both.
+Never auto-publishes.
+
+Settings
+--------
+Edit upload-settings.txt once (same as DistroKid-uploader).
+Bandcamp only uses album= and track= prices from that file.
+Everything else in the file is for DistroKid.
+
+EASIEST (no install) — EXE
+--------------------------
+1. Unpack the ZIP → DK-BC-uploader\ folder appears
+2. Edit upload-settings.txt
+3. Open app\DK-BC-Uploader\ and double-click DK-BC-Uploader.exe
+4. Log into DistroKid AND Bandcamp in the Chrome window (once)
+5. Paste an album folder path, Enter
+6. DistroKid + Bandcamp fill in parallel — review DistroKid first,
+   then Bandcamp when it finishes; if both OK → next album
+
+Chrome login: %LOCALAPPDATA%\DK-BC-Uploader\
+
+Script path
+-----------
+0. 0_associate_ps1.bat (first time)
+1. 1_install.bat (first time)
+2. 2_start_chrome.bat — log into BOTH sites
+3. Optional: 3_check_titles.bat
+4. 4_dk_bc_uploader.bat  "d:\music\ezixen\2026\ezixen - album"
+
+Smoke (open both pages, no upload):
+  .\4_dk_bc_uploader.bat --smoke
+
+Filenames
+---------
+  01. ezixen - intro.wav
+  Trailing "..." in titles is kept. Underscores become ?
+
+Parallel review (short)
+-----------------------
+  DistroKid starts first and is usually ready sooner — check that tab
+  while Bandcamp is still uploading. When Bandcamp finishes, check the
+  draft too. If both look OK, paste the next album folder.
+
+More detail: README.md
