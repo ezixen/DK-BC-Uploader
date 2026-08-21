@@ -24,7 +24,7 @@ Everything else in the file is for DistroKid.
 EASIEST (no install) — EXE
 --------------------------
 1. Unpack the ZIP → DK-BC-uploader\ folder appears
-2. Edit upload-settings.txt
+2. Copy upload-settings.example.txt → upload-settings.txt and edit
 3. Open app\DK-BC-Uploader\ and double-click DK-BC-Uploader.exe
 4. Log into DistroKid AND Bandcamp in the Chrome window (once)
 5. Paste an album folder path, Enter
@@ -32,9 +32,13 @@ EASIEST (no install) — EXE
    then Bandcamp when it finishes; if both OK → next album
 
 You can run several DK-BC-Uploader.exe at once on the same debug Chrome:
-each instance opens its own DistroKid + Bandcamp tabs and keeps those.
+  1) Start Chrome / log into DistroKid AND Bandcamp once
+  2) Open multiple EXE windows
+  3) Each opens its own DistroKid + Bandcamp tabs and keeps those
+  4) Paste a different album into each window
 
-Chrome login: %LOCALAPPDATA%\DK-BC-Uploader\
+Chrome login cookies: %LOCALAPPDATA%\DK-BC-Uploader\
+Do not browse untrusted sites in that debug Chrome. Delete that folder to wipe login.
 
 Script path
 -----------

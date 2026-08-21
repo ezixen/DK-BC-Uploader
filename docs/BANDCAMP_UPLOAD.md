@@ -12,7 +12,7 @@ Simple agent checklist: [`workflow-guidance.md`](workflow-guidance.md)
 
 ## Preconditions
 
-1. External Chrome is running with remote debugging on **`127.0.0.1:9222`** and **`--remote-allow-origins=*`**.
+1. External Chrome is running with remote debugging on **`127.0.0.1:9222`** and **`--remote-allow-origins=http://127.0.0.1`**.
 2. Isolated profile: `--user-data-dir=D:\Dev\musicstuff\local-secrets\chrome-debug-profile`.
 3. User is logged into Bandcamp in that browser (agent does not handle passwords).
 4. User provided one album folder path.
@@ -93,7 +93,7 @@ $chrome = "C:\Program Files\Google\Chrome\Application\chrome.exe"
 $userData = "D:\Dev\musicstuff\local-secrets\chrome-debug-profile"
 Start-Process $chrome -ArgumentList @(
   "--remote-debugging-port=9222",
-  "--remote-allow-origins=*",
+  "--remote-allow-origins=http://127.0.0.1",
   "--user-data-dir=$userData",
   "https://bandcamp.com/login"
 )
@@ -105,7 +105,7 @@ Drive UI via CDP on `9222` (DevTools MCP attached to this browser, or Python web
 
 ## Lessons (update during test runs)
 
-- External Chrome must use `--remote-debugging-port=9222` **and** `--remote-allow-origins=*` or CDP/WebSocket clients get `403 Forbidden`.
+- External Chrome must use `--remote-debugging-port=9222` **and** `--remote-allow-origins=http://127.0.0.1` or CDP/WebSocket clients get `403 Forbidden`. Never `*` — that lets any page in that Chrome attach to CDP. CDP clients send `Origin: http://127.0.0.1`.
 - Use isolated `--user-data-dir` under `local-secrets/chrome-debug-profile` (gitignored).
 - If port 9222 is already taken by an old Chrome without allow-origins, kill that listener and relaunch with the flags above.
 - Cursor internal browser ≠ Bandcamp login session; always use the external debug Chrome.

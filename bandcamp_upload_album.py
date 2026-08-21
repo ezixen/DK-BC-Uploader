@@ -23,6 +23,9 @@ import websocket
 from cdp_owned_tab import claim_tab
 
 CDP = "http://127.0.0.1:9222"
+# Chrome is launched with --remote-allow-origins=CDP_ORIGIN, so the CDP
+# WebSocket handshake must send a matching Origin or Chrome answers 403.
+CDP_ORIGIN = "http://127.0.0.1"
 EDIT_ALBUM = "https://ezixen.bandcamp.com/edit_album"
 
 
@@ -107,7 +110,9 @@ def cdp_alive() -> bool:
 
 class Cdp:
     def __init__(self, ws_url: str):
-        self.ws = websocket.create_connection(ws_url, timeout=60)
+        self.ws = websocket.create_connection(
+            ws_url, timeout=60, suppress_origin=True, header=[f"Origin: {CDP_ORIGIN}"]
+        )
         self.n = 0
 
     def call(self, method: str, params: dict | None = None, timeout: float = 60):

@@ -26,13 +26,13 @@ try {
 } catch {
   Write-Host "Starting debug Chrome..."
   Write-Host "  --remote-debugging-port=9222"
-  Write-Host "  --remote-allow-origins=*"
+  Write-Host "  --remote-allow-origins=http://127.0.0.1"
   Write-Host "  --user-data-dir=$userData"
   Write-Host "  opens DistroKid + Bandcamp login"
 
   Start-Process -FilePath $chrome -ArgumentList @(
     "--remote-debugging-port=9222",
-    "--remote-allow-origins=*",
+    "--remote-allow-origins=http://127.0.0.1",
     "--user-data-dir=$userData",
     "https://distrokid.com/",
     "https://bandcamp.com/login"
