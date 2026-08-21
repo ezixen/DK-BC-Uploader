@@ -1,4 +1,8 @@
-﻿# DK-BC Uploader (DistroKid + Bandcamp)
+﻿<div align="center">
+  <img src="images/uploader-logo.png" alt="uploader logo" width="420"/>
+</div>
+
+# DK-BC Uploader (DistroKid + Bandcamp)
 
 **GitHub (latest always):** https://github.com/ezixen/DK-BC-Uploader  
 **[Latest release](https://github.com/ezixen/DK-BC-Uploader/releases/latest)** · **[ZIP (scripts + EXE)](https://github.com/ezixen/DK-BC-Uploader/releases/latest/download/DK-BC-uploader.zip)** · **[EXE only](https://github.com/ezixen/DK-BC-Uploader/releases/latest/download/DK-BC-Uploader-exe.zip)**  
@@ -34,6 +38,9 @@ Edit **`upload-settings.txt`** once (same format as DistroKid-uploader).
 4. Log into **DistroKid and Bandcamp** in the Chrome window (once per PC; DistroKid 2FA if asked)  
 5. Paste one album folder path — **DistroKid + Bandcamp run in parallel** (DistroKid starts first)  
 6. Review DistroKid when it finishes (Bandcamp may still be uploading), then review Bandcamp — if both OK, next album  
+
+**Several instances at once:** start debug Chrome once, then run multiple EXE/script
+processes — each opens its **own DistroKid + Bandcamp tabs** and keeps those.
 
 Chrome profile: **`%LOCALAPPDATA%\DK-BC-Uploader\`** (not inside the app folder).
 

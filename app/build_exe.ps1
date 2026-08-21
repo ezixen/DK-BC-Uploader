@@ -32,6 +32,9 @@ $final = Join-Path $PSScriptRoot $distName
 $work = Join-Path $PSScriptRoot "_pyi_work"
 $spec = Join-Path $PSScriptRoot "_pyi_spec"
 $versionFile = Join-Path $PSScriptRoot "version_info.txt"
+$iconFile = Join-Path $PSScriptRoot "uploader.ico"
+if (-not (Test-Path $iconFile)) { $iconFile = Join-Path $root "images\uploader-logo.ico" }
+if (-not (Test-Path $iconFile)) { throw "Missing uploader.ico / images\uploader-logo.ico" }
 
 foreach ($p in @($outRoot, $work, $spec)) {
   if (Test-Path $p) { Remove-Item $p -Recurse -Force }
@@ -47,6 +50,7 @@ foreach ($p in @($outRoot, $work, $spec)) {
   --workpath $work `
   --specpath $spec `
   --version-file $versionFile `
+  --icon $iconFile `
   --add-data "$settings;." `
   --add-data "$prices;." `
   --hidden-import websocket `
@@ -61,6 +65,7 @@ foreach ($p in @($outRoot, $work, $spec)) {
   --hidden-import distrokid_dialogs `
   --hidden-import distrokid_finish `
   --hidden-import dk_bc_upload_album `
+  --hidden-import cdp_owned_tab `
   $appPy
 
 if ($LASTEXITCODE -ne 0) { throw "PyInstaller failed: $LASTEXITCODE" }
