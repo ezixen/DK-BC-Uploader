@@ -31,6 +31,9 @@ EASIEST (no install) — EXE
 6. DistroKid + Bandcamp fill in parallel — review DistroKid first,
    then Bandcamp when it finishes; if both OK → next album
 
+You can run several DK-BC-Uploader.exe at once on the same debug Chrome:
+each instance opens its own DistroKid + Bandcamp tabs and keeps those.
+
 Chrome login: %LOCALAPPDATA%\DK-BC-Uploader\
 
 Script path

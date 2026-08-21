@@ -14,12 +14,8 @@ Never final-publishes on either store.
 from __future__ import annotations
 
 import argparse
-import json
 import threading
 import time
-import urllib.error
-import urllib.parse
-import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -72,34 +68,23 @@ def preview_folder(folder: Path) -> None:
         print(" ", w.name, "->", title_from_filename(w.name), flush=True)
 
 
-def _list_pages() -> list[dict]:
-    return json.loads(urllib.request.urlopen(f"{CDP}/json/list", timeout=5).read().decode())
-
-
-def _open_tab(url: str) -> None:
-    """Open a new Chrome tab via CDP HTTP helper (same debug browser)."""
-    q = urllib.parse.quote(url, safe=":/?&=#%")
-    try:
-        urllib.request.urlopen(f"{CDP}/json/new?{q}", timeout=8).read()
-    except Exception:
-        # Fallback: some Chrome builds want PUT
-        req = urllib.request.Request(f"{CDP}/json/new?{q}", method="PUT")
-        urllib.request.urlopen(req, timeout=8).read()
-
-
 def ensure_dual_tabs() -> None:
-    """Make sure one Bandcamp tab and one DistroKid tab exist (for parallel CDP)."""
-    pages = _list_pages()
-    has_bc = any(p.get("type") == "page" and "bandcamp.com" in (p.get("url") or "") for p in pages)
-    has_dk = any(p.get("type") == "page" and "distrokid.com" in (p.get("url") or "") for p in pages)
-    if not has_dk:
-        _log("Opening DistroKid tabâ€¦")
-        _open_tab("https://distrokid.com/new/")
-        time.sleep(0.8)
-    if not has_bc:
-        _log("Opening Bandcamp tabâ€¦")
-        _open_tab("https://bandcamp.com/")
-        time.sleep(0.8)
+    """Claim DistroKid + Bandcamp tabs for this process (open new on first use).
+
+    Later connect()/Cdp() reuse these target ids — never steal another
+    instance's tabs by URL matching.
+    """
+    from cdp_owned_tab import claim_tab, owned_tab_ids
+
+    before = set(owned_tab_ids())
+    if "distrokid" not in before:
+        _log("Opening owned DistroKid tab for this instance…")
+    dk_page = claim_tab("distrokid", "https://distrokid.com/new/", cdp=CDP)
+    if "bandcamp" not in before:
+        _log("Opening owned Bandcamp tab for this instance…")
+    bc_page = claim_tab("bandcamp", "https://bandcamp.com/", cdp=CDP)
+    time.sleep(0.2)
+    _log(f"Owned tabs: DistroKid={dk_page.get('id')}  Bandcamp={bc_page.get('id')}")
 
 
 def smoke_open_pages() -> int:

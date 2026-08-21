@@ -20,6 +20,8 @@ from pathlib import Path
 
 import websocket
 
+from cdp_owned_tab import claim_tab
+
 CDP = "http://127.0.0.1:9222"
 EDIT_ALBUM = "https://ezixen.bandcamp.com/edit_album"
 
@@ -135,6 +137,7 @@ class Cdp:
 
 
 def pick_bandcamp_page() -> dict:
+    """Legacy URL match — prefer claim_owned_bandcamp_tab() for multi-instance safety."""
     pages = json.load(urllib.request.urlopen(f"{CDP}/json/list"))
     for p in pages:
         if p.get("type") == "page" and "edit_album" in p.get("url", ""):
@@ -148,8 +151,15 @@ def pick_bandcamp_page() -> dict:
     raise SystemExit("No Chrome page targets on CDP 9222")
 
 
+def claim_owned_bandcamp_tab() -> dict:
+    """Open a new Bandcamp tab on first use; reuse this process's tab afterward."""
+    return claim_tab("bandcamp", "https://bandcamp.com/", cdp=CDP)
+
+
 def connect() -> Cdp:
-    return Cdp(pick_bandcamp_page()["webSocketDebuggerUrl"])
+    page = claim_owned_bandcamp_tab()
+    print(f"Using owned Bandcamp tab id={page.get('id')}", flush=True)
+    return Cdp(page["webSocketDebuggerUrl"])
 
 
 def set_input_value(cdp: Cdp, selector: str, value: str):
