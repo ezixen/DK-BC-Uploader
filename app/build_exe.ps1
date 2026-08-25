@@ -25,6 +25,8 @@ $appPy = Join-Path $PSScriptRoot "dk_bc_app.py"
 $settings = Join-Path $root "upload-settings.txt"
 $settingsExample = Join-Path $root "upload-settings.example.txt"
 $prices = Join-Path $root "prices.txt"
+$disclaimer = Join-Path $root "disclaimer.txt"
+if (-not (Test-Path $disclaimer)) { throw "Missing disclaimer.txt" }
 if ((-not (Test-Path $settings)) -and (Test-Path $settingsExample)) {
   Copy-Item $settingsExample $settings
   Write-Host "Created upload-settings.txt from upload-settings.example.txt"
@@ -81,6 +83,7 @@ if (-not (Test-Path $outExe)) { throw "Missing $outExe" }
 
 Copy-Item $settings (Join-Path $built "upload-settings.txt") -Force
 Copy-Item $prices (Join-Path $built "prices.txt") -Force
+Copy-Item $disclaimer (Join-Path $built "disclaimer.txt") -Force
 @"
 DK-BC Uploader (EXE)
 ====================
@@ -103,6 +106,7 @@ Copy-Item (Join-Path $built "DK-BC-Uploader.exe") (Join-Path $final "DK-BC-Uploa
 Copy-Item (Join-Path $built "upload-settings.txt") (Join-Path $final "upload-settings.txt") -Force
 Copy-Item (Join-Path $built "prices.txt") (Join-Path $final "prices.txt") -Force
 Copy-Item (Join-Path $built "HOW_TO_RUN.txt") (Join-Path $final "HOW_TO_RUN.txt") -Force
+Copy-Item (Join-Path $built "disclaimer.txt") (Join-Path $final "disclaimer.txt") -Force
 
 . (Join-Path $PSScriptRoot "sign_exe.ps1")
 Invoke-EzixenSign -ExePath (Join-Path $final "DK-BC-Uploader.exe")
