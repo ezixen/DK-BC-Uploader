@@ -71,6 +71,7 @@ foreach ($p in @($outRoot, $work, $spec)) {
   --hidden-import distrokid_tracks `
   --hidden-import distrokid_dialogs `
   --hidden-import distrokid_finish `
+  --hidden-import distrokid_credits `
   --hidden-import dk_bc_upload_album `
   --hidden-import cdp_owned_tab `
   $appPy
