@@ -30,6 +30,10 @@ Edit **`upload-settings.txt`** once (same format as DistroKid-uploader).
 | **DistroKid** | Full file (prices, releaser, real name, AI, credits, Audiomack, mandatory boxes, …) |
 | **Bandcamp** | Only **`album=`** / **`track=`** prices (synced into `prices.txt` each run) |
 
+> **WARNING — backup `upload-settings.txt` before updating.**  
+> Replacing / re-unpacking a release **overwrites** `upload-settings.txt` with the shipped defaults. Save a copy first, then after the update paste your values back or retype what you want over the new defaults.  
+> **v1.5.7** changed the shipped defaults (identity, AI part-of-audio, credits, mandatory checkboxes, …). Whenever this file changes in a future release, the release notes and this README will warn again — merge your custom settings manually.
+
 ## Option A — EXE (easiest, no install)
 
 1. Unpack → open **`DK-BC-uploader/app/DK-BC-Uploader/`**  

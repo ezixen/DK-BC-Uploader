@@ -92,6 +92,9 @@ DK-BC Uploader (EXE)
 Latest: https://github.com/ezixen/DK-BC-Uploader
 
 1. Edit upload-settings.txt (Bandcamp uses album=/track= only)
+   WARNING: before updating, BACK UP upload-settings.txt — updates
+   overwrite it with shipped defaults (v1.5.7+ and whenever defaults
+   change). Merge your values back by hand after update.
 2. Double-click DK-BC-Uploader.exe
 3. Log into DistroKid AND Bandcamp in Chrome (once)
 4. Paste album folder path — both fill in parallel (DistroKid first)
