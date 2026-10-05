@@ -74,6 +74,7 @@ foreach ($p in @($outRoot, $work, $spec)) {
   --hidden-import distrokid_credits `
   --hidden-import dk_bc_upload_album `
   --hidden-import cdp_owned_tab `
+  --hidden-import app_banner `
   $appPy
 
 if ($LASTEXITCODE -ne 0) { throw "PyInstaller failed: $LASTEXITCODE" }
