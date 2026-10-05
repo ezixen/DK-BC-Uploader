@@ -26,6 +26,7 @@ from album_media import (
     numbered_wavs,
     title_from_filename,
 )
+from cdp_owned_tab import url_host_matches
 from upload_settings import load_upload_settings
 
 import bandcamp_upload_album as bc
@@ -101,7 +102,7 @@ def smoke_open_pages() -> int:
         snap_dk = cdp_dk.evaluate("({href: location.href, title: document.title})") or {}
         cdp_dk.close()
         _log(f"DistroKid: {snap_dk}")
-        dk_ok = "distrokid.com" in str((snap_dk or {}).get("href") or "")
+        dk_ok = url_host_matches(str((snap_dk or {}).get("href") or ""), "distrokid.com")
     except Exception as e:
         _log(f"DistroKid smoke error: {e}")
     try:
@@ -112,7 +113,7 @@ def smoke_open_pages() -> int:
         snap_bc = cdp_bc.eval("({href: location.href, title: document.title})")["value"]
         cdp_bc.close()
         _log(f"Bandcamp: {snap_bc}")
-        bc_ok = "bandcamp.com" in str((snap_bc or {}).get("href") or "")
+        bc_ok = url_host_matches(str((snap_bc or {}).get("href") or ""), "bandcamp.com")
     except Exception as e:
         _log(f"Bandcamp smoke error: {e}")
     print("Smoke done â€” no album was uploaded.", flush=True)

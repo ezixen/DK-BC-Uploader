@@ -20,7 +20,7 @@ from pathlib import Path
 
 import websocket
 
-from cdp_owned_tab import claim_tab
+from cdp_owned_tab import claim_tab, url_host_matches
 
 CDP = "http://127.0.0.1:9222"
 # Chrome is launched with --remote-allow-origins=CDP_ORIGIN, so the CDP
@@ -148,7 +148,7 @@ def pick_bandcamp_page() -> dict:
         if p.get("type") == "page" and "edit_album" in p.get("url", ""):
             return p
     for p in pages:
-        if p.get("type") == "page" and "bandcamp.com" in p.get("url", ""):
+        if p.get("type") == "page" and url_host_matches(p.get("url", ""), "bandcamp.com"):
             return p
     for p in pages:
         if p.get("type") == "page":
