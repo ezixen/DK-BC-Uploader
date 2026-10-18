@@ -63,8 +63,6 @@ foreach ($p in @($outRoot, $work, $spec)) {
   --icon $iconFile `
   --add-data "$settings;." `
   --add-data "$prices;." `
-  --add-data "$iconFile;." `
-  --add-data "$jpgFile;." `
   --hidden-import websocket `
   --hidden-import chrome_debug `
   --hidden-import album_media `
@@ -83,9 +81,7 @@ foreach ($p in @($outRoot, $work, $spec)) {
   --hidden-import console_host `
   --hidden-import terminal_logo `
   --hidden-import terminal_logo_data `
-  --hidden-import PIL `
-  --hidden-import PIL.Image `
-  --hidden-import PIL.JpegImagePlugin `
+  --hidden-import jpeg_win `
   $appPy
 
 if ($LASTEXITCODE -ne 0) { throw "PyInstaller failed: $LASTEXITCODE" }
