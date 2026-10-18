@@ -7,6 +7,8 @@
 **GitHub (latest always):** https://github.com/ezixen/DK-BC-Uploader  
 **[Latest release](https://github.com/ezixen/DK-BC-Uploader/releases/latest)** · **[ZIP (scripts + EXE)](https://github.com/ezixen/DK-BC-Uploader/releases/latest/download/DK-BC-uploader.zip)** · **[EXE only](https://github.com/ezixen/DK-BC-Uploader/releases/latest/download/DK-BC-Uploader-exe.zip)**  
 
+Please download only from the official GitHub release above — thank you!
+
 Unpack either ZIP → you get a **`DK-BC-uploader/`** folder (no need to create one).
 
 ---

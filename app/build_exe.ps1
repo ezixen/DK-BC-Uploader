@@ -42,6 +42,9 @@ $versionFile = Join-Path $PSScriptRoot "version_info.txt"
 $iconFile = Join-Path $PSScriptRoot "uploader.ico"
 if (-not (Test-Path $iconFile)) { $iconFile = Join-Path $root "images\uploader-logo.ico" }
 if (-not (Test-Path $iconFile)) { throw "Missing uploader.ico / images\uploader-logo.ico" }
+$jpgFile = Join-Path $PSScriptRoot "uploader.jpg"
+if (-not (Test-Path $jpgFile)) { $jpgFile = Join-Path $root "uploader.jpg" }
+if (-not (Test-Path $jpgFile)) { throw "Missing uploader.jpg" }
 
 foreach ($p in @($outRoot, $work, $spec)) {
   if (Test-Path $p) { Remove-Item $p -Recurse -Force }
@@ -60,6 +63,8 @@ foreach ($p in @($outRoot, $work, $spec)) {
   --icon $iconFile `
   --add-data "$settings;." `
   --add-data "$prices;." `
+  --add-data "$iconFile;." `
+  --add-data "$jpgFile;." `
   --hidden-import websocket `
   --hidden-import chrome_debug `
   --hidden-import album_media `
@@ -75,6 +80,8 @@ foreach ($p in @($outRoot, $work, $spec)) {
   --hidden-import dk_bc_upload_album `
   --hidden-import cdp_owned_tab `
   --hidden-import app_banner `
+  --hidden-import terminal_logo `
+  --hidden-import terminal_logo_data `
   $appPy
 
 if ($LASTEXITCODE -ne 0) { throw "PyInstaller failed: $LASTEXITCODE" }
@@ -86,11 +93,18 @@ if (-not (Test-Path $outExe)) { throw "Missing $outExe" }
 Copy-Item $settings (Join-Path $built "upload-settings.txt") -Force
 Copy-Item $prices (Join-Path $built "prices.txt") -Force
 Copy-Item $disclaimer (Join-Path $built "disclaimer.txt") -Force
+Copy-Item $iconFile (Join-Path $built "uploader.ico") -Force
+Copy-Item $jpgFile (Join-Path $built "uploader.jpg") -Force
 @"
 DK-BC Uploader (EXE)
 ====================
 
-Latest: https://github.com/ezixen/DK-BC-Uploader
+Latest always (GitHub — please download only from here):
+  https://github.com/ezixen/DK-BC-Uploader
+  https://github.com/ezixen/DK-BC-Uploader/releases/latest
+
+Please get this app only from the official GitHub release above —
+copies from elsewhere may be outdated or altered. Thank you!
 
 1. Edit upload-settings.txt (Bandcamp uses album=/track= only)
    WARNING: before updating, BACK UP upload-settings.txt — updates
@@ -103,6 +117,7 @@ Latest: https://github.com/ezixen/DK-BC-Uploader
 6. Never auto-publishes
 
 Chrome login: %LOCALAPPDATA%\DK-BC-Uploader\
+On quit: confirm first — debug Chrome stops with the app
 "@ | Set-Content (Join-Path $built "HOW_TO_RUN.txt") -Encoding UTF8
 
 New-Item -ItemType Directory -Force -Path $final | Out-Null
@@ -112,6 +127,8 @@ Copy-Item (Join-Path $built "upload-settings.txt") (Join-Path $final "upload-set
 Copy-Item (Join-Path $built "prices.txt") (Join-Path $final "prices.txt") -Force
 Copy-Item (Join-Path $built "HOW_TO_RUN.txt") (Join-Path $final "HOW_TO_RUN.txt") -Force
 Copy-Item (Join-Path $built "disclaimer.txt") (Join-Path $final "disclaimer.txt") -Force
+Copy-Item $iconFile (Join-Path $final "uploader.ico") -Force
+Copy-Item $jpgFile (Join-Path $final "uploader.jpg") -Force
 
 . (Join-Path $PSScriptRoot "sign_exe.ps1")
 Invoke-EzixenSign -ExePath (Join-Path $final "DK-BC-Uploader.exe")
