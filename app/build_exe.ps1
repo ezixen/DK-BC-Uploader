@@ -120,6 +120,8 @@ Chrome login: %LOCALAPPDATA%\DK-BC-Uploader\
 On quit: confirm first — debug Chrome stops with the app
 "@ | Set-Content (Join-Path $built "HOW_TO_RUN.txt") -Encoding UTF8
 
+# Wipe first — robocopy /E would keep stale _internal deps from older builds
+if (Test-Path $final) { Remove-Item $final -Recurse -Force }
 New-Item -ItemType Directory -Force -Path $final | Out-Null
 & robocopy $built $final /E /XD local-secrets /NFL /NDL /NJH /NJS /nc /ns /np /R:2 /W:1 | Out-Null
 Copy-Item (Join-Path $built "DK-BC-Uploader.exe") (Join-Path $final "DK-BC-Uploader.exe") -Force
